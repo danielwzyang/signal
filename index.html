@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SIGNAL</title>
+<link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+<style>
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #0d0d0d;
+    color: #4dba4d;
+    font: 20px "VT323", monospace;
+    padding: 24px;
+    max-width: 700px;
+}
+
+p {
+    white-space: pre-wrap;
+}
+
+.error {
+    color: #c84b4b;
+}
+
+.dim {
+    color: #225522;
+}
+
+.bright {
+    color: #d0d0c0;
+}
+
+.system {
+    color: #4db8b8;
+}
+
+.warning {
+    color: #b89030;
+}
+
+button {
+    display: block;
+    background: none;
+    border: none;
+    color: #225522;
+    font: inherit;
+    text-align: left;
+    padding: 0;
+    cursor: pointer;
+    white-space: pre-wrap;
+}
+
+button:hover {
+    color: #4dba4d;
+}
+
+.caret {
+    display: inline-block;
+    width: 10px;
+    height: 0.8em;
+    background: #4dba4d;
+    vertical-align: middle;
+    margin-left: 2px;
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+</style>
+</head>
+
+<body>
+    <div id="terminal"></div>
+
+    <script>
+
+let scenes = {
+    "intro": {
+        text: `!! ERROR message
+## SYSTEM message
+** BRIGHT message
+>> WARNING message
+
+normal text looks like this
+    indented text looks like this
+`,
+        next: "node1"
+    },
+
+
+    "node1": {
+        text: `Node 1
+
+node 1 text
+`,
+        choices: [
+            { label: "[A] A", next: "node2-A" },
+            { label: "[B] B", next: "node2-B" },
+        ]
+    },
+
+
+    "node2-A": {
+        text: `Node 2
+
+picked A
+`,
+        choices: [
+            { label: "[A] A", next: "node3-A" },
+            { label: "[B] B", next: "node3-B" },
+        ]
+    },
+
+    "node2-B": {
+        text: `Node 2
+
+picked B
+`,
+        choices: [
+            { label: "[A] A", next: "node3-A" },
+            { label: "[B] B", next: "node3-B" },
+        ]
+    },
+
+
+    "node3-A": {
+        text: `Node 3
+
+picked A
+`,
+        choices: [
+            { label: "[A] A", next: "node4-A" },
+            { label: "[B] B", next: "node4-B" },
+        ]
+    },
+
+    "node3-B": {
+        text: `Node 3
+
+picked B
+`,
+        choices: [
+            { label: "[A] A", next: "node4-A" },
+            { label: "[B] B", next: "node4-B" },
+        ]
+    },
+
+    "node4-A": {
+        text: `Node 4
+
+picked A
+`,
+        choices: [
+            { label: "[A] A", next: "node5-A" },
+            { label: "[B] B", next: "node5-B" },
+        ]
+    },
+
+    "node4-B": {
+        text: `Node 4
+
+picked B
+`,
+        choices: [
+            { label: "[A] A", next: "node5-A" },
+            { label: "[B] B", next: "node5-B" },
+        ]
+    },
+
+
+    "node5-A": {
+        text: `Node 5
+
+picked A
+`,
+        choices: [
+            { label: "[A] A", next: "end-AA" },
+            { label: "[B] B", next: "end-AB" },
+        ]
+    },
+
+    "node5-B": {
+        text: `Node 5
+
+picked B
+`,
+        choices: [
+            { label: "[A] A", next: "end-BA" },
+            { label: "[B] B", next: "end-BB" },
+        ]
+    },
+
+    "end-AA" : {
+        text: `End AA
+
+ending
+`,
+        restart: true
+    },
+
+    "end-AB" : {
+        text: `End AB
+
+ending
+`,
+        restart: true
+    },
+
+    "end-BA" : {
+        text: `End BA
+
+ending
+`,
+        restart: true
+    },
+
+    "end-BB" : {
+        text: `End BB
+
+ending
+`,
+        restart: true
+    },
+}
+
+const terminal = document.getElementById("terminal")
+
+function appendText(raw) {
+    for (let row of raw.split("\n")) {
+        let line = row.trimEnd()
+
+        if (!line.trim()) {
+            terminal.appendChild(document.createElement("br"))
+            continue
+        }
+
+        let p = document.createElement("p")
+
+        if (line.startsWith("!! ")) {
+            p.className = "error"
+            p.textContent = line.slice(3)
+        } else if (line.startsWith("** ")) {
+            p.className = "bright"
+            p.textContent = line.slice(3)
+        } else if (line.startsWith("## ")) {
+            p.className = "system"
+            p.textContent = line.slice(3)
+        } else if (line.startsWith(">> ")) {
+            p.className = "warning"
+            p.textContent = line.slice(3)
+        } else p.textContent = line
+
+        terminal.appendChild(p)
+    }
+    scroll()
+}
+
+function scroll() {
+    window.scrollTo(0, document.body.scrollHeight)
+}
+
+function addCaret(parent) {
+    let caret = document.createElement("span")
+    caret.className = "caret"
+    parent.appendChild(caret)
+}
+
+function choose(group, label, next) {
+    let choice = document.createElement("p")
+    choice.className = "dim"
+    choice.textContent = "> " + label
+
+    group.replaceWith(choice)
+    terminal.appendChild(document.createElement("br"))
+    terminal.appendChild(document.createElement("br"))
+
+    play(next)
+}
+
+function play(id) {
+    if (id === "_") {
+        terminal.innerHTML = ""
+        id = "intro"
+    }
+
+    let scene = scenes[id]
+    if (!scene) return
+    appendText(scene.text)
+
+    let group = document.createElement("div")
+
+    if (scene.choices) {
+        for (let choice of scene.choices) {
+            let button = document.createElement("button")
+            button.textContent = "> " + choice.label
+            button.onclick = () => choose(group, choice.label, scene.restart ? "_" : choice.next)
+            group.appendChild(button)
+        }
+    } else {
+        let label = scene.restart ? "restart" : "continue"
+        let button = document.createElement("button")
+        button.textContent = "> " + label
+        button.onclick = () => choose(group, label, scene.restart ? "_" : scene.next)
+        group.appendChild(button)
+    }
+
+    addCaret(group)
+    terminal.appendChild(group)
+
+    scroll()
+}
+
+play("intro")
+    </script>
+</body>
+
+</html>
