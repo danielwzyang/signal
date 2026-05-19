@@ -36,10 +36,6 @@ p {
     color: #d0d0c0;
 }
 
-.system {
-    color: #4db8b8;
-}
-
 .warning {
     color: #b89030;
 }
@@ -85,13 +81,27 @@ button:hover {
 
 let scenes = {
     "intro": {
-        text: `!! !! ERROR message
-## ## SYSTEM message
-** ** BRIGHT message
->> >> WARNING message
+        text: `** SILAS ENABLED
+** DECISION MAKING MODULE ENABLED 
 
-normal text looks like this
-    indented text looks like this
+!! ERROR DETECTED AT TIME 64.13.95253 [GC]
+
+** CORE BRIEFING OPENED:
+
+MISSION R4EN5X1 IS ACTIVE.
+
+THE GALACTIC CONVENTION HAS COMMISSIONED A SEARCH FOR HABITABLE GALAXIES TO FIND A SOLUTION TO THE OVERPOPULATION CRISIS.
+
+A PLANET HAS BEEN FOUND IN THE NEAREST SECTOR OF THE LARGE MAGELLANIC CLOUD.
+GASES HAVE BEEN DETECTED IN ITS ATMOSPHERE THAT SUGGEST LIFE.
+THERE MAY ALSO BE POTENTIAL MACRO LIFEFORMS GIVEN THE PLANET'S UNEXPLAINED VIBRATIONS.
+
+YOU ARE SILAS, THE AI CAPTAIN ABOARD THE BLITZ.
+YOU ARE IN CHARGE OF A CREW OF 8 WHO ARE TO BE IN CRYOSTASIS ALONG THE JOURNEY TO THE LARGE MAGELLANIC CLOUD.
+YOU MAY CHOOSE TO WAKE THEM IN DIRE SITUATIONS ALONG THE JOURNEY.
+
+>> NOTE THAT THE BLITZ HAS BEEN ARMED WITH TECHNOLOGY CAPABLE OF NEAR LIGHT SPEED.
+>> IT IS YET TO BE TESTED FOR LONG TERM USAGE.
 `,
         next: "node1"
     },
@@ -251,9 +261,6 @@ function appendText(raw) {
         } else if (line.startsWith("** ")) {
             p.className = "bright"
             p.textContent = line.slice(3)
-        } else if (line.startsWith("## ")) {
-            p.className = "system"
-            p.textContent = line.slice(3)
         } else if (line.startsWith(">> ")) {
             p.className = "warning"
             p.textContent = line.slice(3)
@@ -306,7 +313,7 @@ function play(id) {
             group.appendChild(button)
         }
     } else {
-        let label = scene.restart ? "restart" : "continue"
+        let label = scene.restart ? "restart" : "read error"
         let button = document.createElement("button")
         button.textContent = "> " + label
         button.onclick = () => choose(group, label, scene.restart ? "_" : scene.next)
