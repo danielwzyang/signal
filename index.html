@@ -15,7 +15,7 @@
 body {
     background: #0d0d0d;
     color: #4dba4d;
-    font: 20px "VT323", monospace;
+    font: 22px "VT323", monospace;
     padding: 24px;
     max-width: 700px;
 }
@@ -28,10 +28,6 @@ p {
     color: #c84b4b;
 }
 
-.dim {
-    color: #225522;
-}
-
 .bright {
     color: #d0d0c0;
 }
@@ -40,11 +36,15 @@ p {
     color: #b89030;
 }
 
+.crew {
+    color: #40d9db;
+}
+
 button {
     display: block;
     background: none;
     border: none;
-    color: #225522;
+    color: #4dba4d;
     font: inherit;
     text-align: left;
     padding: 0;
@@ -53,7 +53,7 @@ button {
 }
 
 button:hover {
-    color: #4dba4d;
+    color: #388538
 }
 
 .caret {
@@ -92,7 +92,7 @@ MISSION R4EN5X1 IS ACTIVE.
 
 THE GALACTIC CONVENTION HAS COMMISSIONED A SEARCH FOR HABITABLE GALAXIES TO FIND A SOLUTION TO THE OVERPOPULATION CRISIS.
 
-A PLANET HAS BEEN FOUND IN THE NEAREST SECTOR OF THE LARGE MAGELLANIC CLOUD.
+PLANET VIBRATIO IS LOCATED IN THE NEAREST SECTOR OF THE LARGE MAGELLANIC CLOUD.
 GASES HAVE BEEN DETECTED IN ITS ATMOSPHERE THAT SUGGEST LIFE.
 THERE MAY ALSO BE POTENTIAL MACRO LIFEFORMS GIVEN THE PLANET'S UNEXPLAINED VIBRATIONS.
 
@@ -108,104 +108,155 @@ YOU MAY CHOOSE TO WAKE THEM IN DIRE SITUATIONS ALONG THE JOURNEY.
 
 
     "node1": {
-        text: `Node 1
-
-node 1 text
+        text: `!! UNRECOGNIZED SIGNAL RECEIVED AT 64.13.95253 [GC].
+>> PRESENCE ALARMING BUT TOO WEAK TO DECODE ANY INFORMATION.
 `,
         choices: [
-            { label: "[A] A", next: "node2-A" },
-            { label: "[B] B", next: "node2-B" },
+            { label: "[A] ATTEMPT CONTACT WITH THE SIGNAL. TRY RESPONDING TO SEE IF SOURCE OF THE SIGNAL WILL REPLY.", next: "node2-A" },
+            { label: "[B] IGNORE THE SIGNAL. MAKE NOTE OF RADIOACTIVE ISOTOPES IN GAS CLOUD POTENTIALLY CREATING NOISY SIGNAL.", next: "node2-B" },
         ]
     },
 
 
     "node2-A": {
-        text: `Node 2
+        text: `A RESPONSE HAS BEEN SENT IN ALL DIRECTIONS FROM THE SHIP.
+AS OF THIS MOMENT, IT SEEMS THAT NOTHING IS GOING THROUGH.
+COMMUNICATIONS MODULE HAS NOT RECEIVED A RESPONSE.
 
-picked A
+** WRITING TO COMMUNICATIONS LOG...
+
+!! ERROR: FILE ACCESS COMPROMISED.
+
+>> ALL FILES SEEM TO BE DISABLED.
 `,
         choices: [
-            { label: "[A] A", next: "node3-A" },
-            { label: "[B] B", next: "node3-B" },
+            { label: "[A] RUN SELF DIAGNOSTIC ON ALL SYSTEMS AND FILES.", next: "node3-A" },
+            { label: "[B] WAKE CREW MEMBER DR. CROLLA TO RUN MANUAL DIAGNOSTIC.", next: "node3-B" },
         ]
     },
 
     "node2-B": {
-        text: `Node 2
+        text: `THE BLITZ WILL CONTINUE ON ITS ORIGINAL PATH TO PLANET VIBRATIO.
 
-picked B
+** WRITING TO NAVIGATIONS LOG...
+
+!! ERROR: FILE ACCESS COMPROMISED
+
+>> ALL FILES SEEM TO BE DISABLED.
 `,
         choices: [
-            { label: "[A] A", next: "node3-A" },
-            { label: "[B] B", next: "node3-B" },
+            { label: "[A] RUN SELF DIAGNOSTIC ON ALL SYSTEMS AND FILES.", next: "node3-A" },
+            { label: "[B] WAKE CREW MEMBER DR. CROLLA TO RUN MANUAL DIAGNOSTIC.", next: "node3-B" },
         ]
     },
 
 
     "node3-A": {
-        text: `Node 3
+        text: `** SELF DIAGNOSTIC COMPLETE.
+** ALL SYSTEMS BUT FILE ACCESS ARE OPERATING AS INTENDED.
 
-picked A
+** TRYING TO RESTART FILE MODULE...
+
+!! ERROR: UNKNOWN SIGNAL IS INTERFERING WITH EXISING FILES; DATA CORRUPTED.
+
+THE SIGNAL SEEMS TO COME FROM THE DIRECTION OF DESTINATION.
+
+** THE BLITZ CONTINUES TO ACCELERATE TOWARDS NEAR LIGHTSPEED TO MATCH SCHEDULE.
 `,
         choices: [
-            { label: "[A] A", next: "node4-A" },
-            { label: "[B] B", next: "node4-B" },
+            { label: "[A] CONTINUE TO LISTEN FOR SIGNAL.", next: "node4-A" },
+            { label: "[B] QUARANTINE COMMUNICATIONS MODULE TO BLOCK OUT SIGNAL.", next: "node4-B" },
         ]
     },
 
     "node3-B": {
-        text: `Node 3
+        text: `DR. CROLLA HAS ANALYZED THE SITUATION, CONCLUDING THAT IT IS MOST LIKELY RADIOACTIVE INTERFERENCE BASED ON LOW SIGNAL STRENGTH.
+HE HAS RETURNED TO HIS CRYOCHAMBER.
 
-picked B
+** THE BLITZ CONTINUES TO ACCELERATE TOWARDS NEAR LIGHTSPEED TO MATCH SCHEDULE.
 `,
         choices: [
-            { label: "[A] A", next: "node4-A" },
-            { label: "[B] B", next: "node4-B" },
+            { label: "[A] CONTINUE TO LISTEN FOR SIGNAL.", next: "node4-A" },
+            { label: "[B] QUARANTINE COMMUNICATIONS MODULE TO BLOCK OUT SIGNAL.", next: "node4-B" },
         ]
     },
 
     "node4-A": {
-        text: `Node 4
+        text: `SIGNAL STRENGTH IS GROWING AS THE BLITZ ACCELERATES.
 
-picked A
+** COMMUNICATIONS MODULE DECODING SIGNAL...
+
+** HEAD OF SIGNAL HAS BEEN RECOVERED: TRUNCATED FILE HEADER FOUND
+
+>> INTACT STRING FOUND: ~F THE ORGANIZATION OF THE GALACTIC CONVENTION T~
 `,
         choices: [
-            { label: "[A] A", next: "node5-A" },
-            { label: "[B] B", next: "node5-B" },
+            { label: "[A] AWAKEN THE CREW. THE RECEIVED SIGNAL IS ANOMALOUS ACTIVITY TO BE INVESTIGATED. ANALYSIS WITHOUT FILES IS UNWISE.", next: "node5-A" },
+            { label: "[B] LOCK THE CREW IN CRYOSTASIS AND CONTINUE ONWARD TO VIBRATIO. HUMAN ANALYSIS IS FLAWED AND CAN DISRUPT MISSION.", next: "node5-B" },
         ]
     },
 
     "node4-B": {
-        text: `Node 4
+        text: `** QUARANTINE ACTIVE
 
-picked B
+!! ERROR: SIGNAL LEAKING THROUGH COMMUNICATIONS QUARANTINE: WALL BREACHED
+
+THE SIGNAL STRENGTH SEEMS TO BE GROWING.
+
+** COMMUNICATIONS MODULE DECODING SIGNAL...
+
+** HEAD OF SIGNAL HAS BEEN RECOVERED: TRUNCATED FILE HEADER FOUND
+
+>> INTACT STRING FOUND: ~F THE ORGANIZATION OF THE GALACTIC CONVENTION T~
 `,
         choices: [
-            { label: "[A] A", next: "node5-A" },
-            { label: "[B] B", next: "node5-B" },
+            { label: "[A] AWAKEN THE CREW. THE RECEIVED SIGNAL IS ANOMALOUS ACTIVITY TO BE INVESTIGATED. ANALYSIS WITHOUT FILES IS UNWISE.", next: "node5-A" },
+            { label: "[B] LOCK THE CREW IN CRYOSTASIS AND CONTINUE ONWARD TO VIBRATIO. HUMAN ANALYSIS IS FLAWED AND CAN DISRUPT MISSION.", next: "node5-B" },
         ]
     },
 
 
     "node5-A": {
-        text: `Node 5
+        text: `** MEDICAL MODULE WAKING ALL MEMBERS FROM CRYOSTASIS
 
-picked A
+THE CREW MEMBERS ARE NOW AWAKE AND DIAGNOSIS HAS BEEN SENT TO USER TERMINAL.
+ALL SYSTEMS OUTPUT BEING SENT TO USER TERMINAL.
+
+** COMMUNICATIONS MODULE CONTINUES DECODING SIGNAL: FILE SEEMS TO BE CORRUPTED
+
+** TAIL OF SIGNAL HAS BEEN RECOVERED: ENCRYPTED SIGNATURE FOUND
+
+>> ID READS "LS24719571111". ALIAS READS "BLITZ".
+
+>> FOOTNOTE READS "RETURN".
+
+** READING SHIP CREW INPUT:
+## WHAT DOES THIS MEAN?
+
+THE SOURCE OF THE SIGNAL IS THE BLITZ.
 `,
         choices: [
-            { label: "[A] A", next: "end-AA" },
-            { label: "[B] B", next: "end-AB" },
+            { label: "[A] TURN BACK TO HOME BASE AND SEND LIGHT-SPEED SIGNAL BACK TO GALACTIC CONVENTION. REPORT UNEXPLAINED WARNING.", next: "end-AA" },
+            { label: "[B] TAIL OF SIGNAL COULD BE MISREAD DUE TO FAULTY FILES MODULE. IGNORE UNRELIABLE SIGNAL AND CONTINUE TO VIBRATIO.", next: "end-AB" },
         ]
     },
 
     "node5-B": {
-        text: `Node 5
+        text: `** MEDICAL MODULE KEEPING ALL CREW MEMBERS IN CRYOSTASIS
+
+** COMMUNICATIONS MODULE CONTINUES DECODING SIGNAL: FILE SEEMS TO BE CORRUPTED
+
+** TAIL OF SIGNAL HAS BEEN RECOVERED: ENCRYPTED SIGNATURE FOUND
+
+>> ID READS "LS24719571111". ALIAS READS "BLITZ".
+
+>> FOOTNOTE READS "RETURN".
 
 picked B
 `,
         choices: [
-            { label: "[A] A", next: "end-BA" },
-            { label: "[B] B", next: "end-BB" },
+            { label: "[A] TURN BACK TO HOME BASE AND SEND LIGHT-SPEED SIGNAL BACK TO GALACTIC CONVENTION. REPORT UNEXPLAINED WARNING.", next: "end-AA" },
+            { label: "[B] TAIL OF SIGNAL COULD BE MISREAD DUE TO FAULTY FILES MODULE. IGNORE UNRELIABLE SIGNAL AND CONTINUE TO VIBRATIO.", next: "end-AB" },
         ]
     },
 
@@ -264,11 +315,13 @@ function appendText(raw) {
         } else if (line.startsWith(">> ")) {
             p.className = "warning"
             p.textContent = line.slice(3)
+        } else if (line.startsWith("## ")) {
+            p.className = "crew"
+            p.textContent = line.slice(3)
         } else p.textContent = line
 
         terminal.appendChild(p)
     }
-    scroll()
 }
 
 function scroll() {
@@ -283,7 +336,6 @@ function addCaret(parent) {
 
 function choose(group, label, next) {
     let choice = document.createElement("p")
-    choice.className = "dim"
     choice.textContent = "> " + label
 
     group.replaceWith(choice)
@@ -313,7 +365,7 @@ function play(id) {
             group.appendChild(button)
         }
     } else {
-        let label = scene.restart ? "restart" : "read error"
+        let label = scene.restart ? "RESTART" : "READ ERROR"
         let button = document.createElement("button")
         button.textContent = "> " + label
         button.onclick = () => choose(group, label, scene.restart ? "_" : scene.next)
